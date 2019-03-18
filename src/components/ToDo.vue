@@ -6,15 +6,17 @@
         <th v-for="(item, index) in titles" :key="index">{{item}}</th>
       </tr>
       <tr v-for="(item, index) in toDoList" :key="index" :id="item.id">
-        <td contenteditable="true">{{item.item}}</td>
-        <td contenteditable="true">{{item.solution}}</td>
-        <td contenteditable="true">{{item.done}}</td>
-        <td contenteditable="true">{{item.date}}</td>
-        <td class="editBt">
-          <button @click="add(item.id)">新增</button>
-          <button @click="save(item.id)">保存</button>
-          <button @click="edit(item.id)">修改</button>
-          <button @click="deletes(item.id)">删除</button>
+        <td contenteditable="true" style="width: 20%">{{item.item}}</td>
+        <td contenteditable="true" style="width: 25%">{{item.solution}}</td>
+        <td contenteditable="true" style="width: 10%">{{item.done}}</td>
+        <td contenteditable="true" style="width: 12%">{{item.date}}</td>
+        <td>
+          <div class="editBt">
+            <button @click="add(item.id)">新增</button>
+            <button @click="save(item.id)">保存</button>
+            <button @click="edit(item.id)">修改</button>
+            <button @click="deletes(item.id)">删除</button>
+          </div>
         </td>
       </tr>
     </table>
@@ -44,7 +46,7 @@ export default {
       h: `${window.innerHeight}px`,
       titles: ["事项", "解决方案", "进度", "完成时间", "操作"],
       toDoList: [],
-      baseUrl: "http://127.0.0.1:7777",
+      baseUrl: "http://47.112.112.174",
       page: 0,
       jumpPage: 1,
       last: false,
@@ -182,6 +184,7 @@ export default {
   background: rgb(216, 215, 213);
   table {
     border: none;
+    width: 80%;
     caption {
       font-size: 2rem;
       font-weight: 700;
@@ -189,12 +192,14 @@ export default {
       color: rgba(24, 22, 22, 0.116);
     }
     th {
-      color: rgba(0, 0, 0, 0.637);
+      color: rgba(10, 9, 9, 0.815);
+      font-weight: 700;
     }
     td,
     th {
       border: 1px solid rgb(132, 177, 229);
       padding: 0.625rem 1.25rem;
+      position: relative;
     }
   }
 }
@@ -203,6 +208,13 @@ export default {
   display: flex;
   justify-content: space-around;
   align-items: center;
+  position: absolute;
+  margin: auto;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  min-height: 50px;
   button {
     background: rgb(84, 149, 235);
     border: none;
