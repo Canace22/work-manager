@@ -46,7 +46,7 @@ export default {
       h: `${window.innerHeight}px`,
       titles: ["事项", "解决方案", "进度", "完成时间", "操作"],
       toDoList: [],
-      baseUrl: "http://47.112.112.174",
+      baseUrl: "http://47.112.112.174:7777",
       page: 0,
       jumpPage: 1,
       last: false,
