@@ -5,7 +5,7 @@
       <tr>
         <th v-for="(item, index) in titles" :key="index">{{item}}</th>
       </tr>
-      <tr v-for="(item, index) in toDoList" :key="index" :id="item.id">
+      <tr v-for="(item, index) in lists" :key="index" :id="item.id">
         <td contenteditable="true" style="width: 20%">{{item.item}}</td>
         <td contenteditable="true" style="width: 25%">{{item.solution}}</td>
         <td contenteditable="true" style="width: 10%">{{item.done}}</td>
@@ -22,16 +22,16 @@
     </table>
     <footer>
       <div class="pagenation">
-        <span :class="{selected:selected===-1}" v-if="last" @click="selectLast()">上一页</span>
+        <!-- <span :class="{selected:selected===-1}" v-if="last" @click="selectLast()">上一页</span> -->
         <span
           :class="{selected:selected===index}"
-          v-for="(item, index) in 5"
+          v-for="(item, index) in totalPage"
           :key="index"
           @click="selectPage(index)"
         >{{item}}</span>
-        <span :class="{selected:selected===-2}" v-if="next" @click="selectNext()">下一页</span>
+        <!-- <span :class="{selected:selected===-2}" v-if="next" @click="selectNext()">下一页</span> -->
         <input v-model="jumpPage">
-        <span @click="selectPage(jumpPage-1)">跳转</span>
+        <span @click="selectPage(jumpPage)">跳转</span>
       </div>
     </footer>
   </div>
@@ -47,27 +47,31 @@ export default {
       titles: ["事项", "解决方案", "进度", "完成时间", "操作"],
       toDoList: [],
       baseUrl: "http://47.112.112.174:7777",
+      // baseUrl: "http://192.168.1.247:7777",
       page: 0,
       jumpPage: 1,
       last: false,
       next: true,
-      selected: 0
+      selected: 0,
+      totalPage: 0,
+      newId: 0
     };
   },
   computed: {
     lists() {
-      return this.toDoList.slice(this.page, this.page + 5);
+      return this.toDoList.slice(this.page * 6, this.page * 6 + 5);
     }
   },
   created() {
     this.requestList(0);
   },
   methods: {
-    requestList(page) {
-      let params = { page: page };
-      http.get(`${this.baseUrl}/v1/work`, params).then(res => {
+    requestList() {
+      http.get(`${this.baseUrl}/v1/work`).then(res => {
         this.toDoList = [...res.data];
+        this.totalPage = Math.ceil(this.toDoList.length / 5);
       });
+      
     },
     addList(id, item, solution, done, date) {
       const temp = {
@@ -112,10 +116,15 @@ export default {
       alert("修改成功");
     },
     add(id) {
-      this.toDoList.push({ id: id + 123 });
+      this.newId = id + 123;
+      this.toDoList.forEach((element, index, self) => {
+        if (element.id === id) {
+          self.splice(index + 1, 0, { id: this.newId });
+        }
+      });
     },
     save() {
-      const id = this.toDoList.slice(-1)[0].id;
+      const id = this.newId;
       const list = document.getElementById(id).childNodes;
 
       this.addList(
@@ -146,18 +155,9 @@ export default {
         list[3].innerHTML
       );
     },
-    selectLast() {
-      this.selected = -1;
-      this.requestList(this.jumpPage - 2);
-      if (this.jumpPage - 2 === 0) {
-        this.last = false;
-        this.jumpPage = this.jumpPage - 1;
-        this.selected = this.jumpPage - 1;
-      }
-    },
     selectPage(index) {
       this.selected = index;
-      this.requestList(index);
+      this.page = index;
       this.jumpPage = index + 1;
       if (index > 0) {
         this.last = true;
@@ -169,12 +169,6 @@ export default {
       } else {
         this.next = true;
       }
-    },
-    selectNext() {
-      this.selected = -2;
-      this.requestList(this.jumpPage);
-      this.jumpPage = this.jumpPage + 1;
-      this.selected = this.jumpPage - 1;
     }
   }
 };
