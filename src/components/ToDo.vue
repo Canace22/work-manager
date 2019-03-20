@@ -93,7 +93,6 @@ export default {
       const params = {
         id: id
       };
-      console.log(params);
       http.post(`${this.baseUrl}/v1/deletework`, params, temp);
     },
     updateList(id, item, solution, done, date) {
@@ -110,6 +109,7 @@ export default {
         date: date
       };
       http.post(`${this.baseUrl}/v1/updateWork`, params, temp);
+      alert("修改成功");
     },
     add(id) {
       this.toDoList.push({ id: id + 123 });
@@ -125,9 +125,15 @@ export default {
         list[2].innerHTML,
         list[3].innerHTML
       );
+      alert("保存成功");
     },
     deletes(id) {
       this.deleteList(id);
+      this.toDoList.forEach((element, index, self) => {
+        if (element.id === id) {
+          self.splice(index, 1);
+        }
+      });
     },
     edit(id) {
       const list = document.getElementById(id).childNodes;
