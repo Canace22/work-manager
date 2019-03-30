@@ -5,11 +5,13 @@
       <tr>
         <th v-for="(item, index) in titles" :key="index">{{item}}</th>
       </tr>
-      <tr v-for="(item, index) in lists" :key="index" :id="item.id">
-        <td contenteditable="true" style="width: 20%">{{item.item}}</td>
+      <tr :class="{checked:item.done}" v-for="(item, index) in lists" :key="index" :id="item.id">
+        <td contenteditable="true" class="item">
+          <input type="checkbox" class="item-checkbox" name="item" :checked="item.done">
+          <span class="item-text">{{item.item}}</span>
+        </td>
         <td contenteditable="true" style="width: 25%">{{item.solution}}</td>
-        <td contenteditable="true" style="width: 10%">{{item.done}}</td>
-        <td contenteditable="true" style="width: 12%">{{item.date}}</td>
+        <td contenteditable="true" class="date">{{item.date}}</td>
         <td>
           <div class="editBt">
             <button @click="add(item.id)">新增</button>
@@ -31,7 +33,7 @@
         >{{item}}</span>
         <!-- <span :class="{selected:selected===-2}" v-if="next" @click="selectNext()">下一页</span> -->
         <input v-model="jumpPage">
-        <span @click="selectPage(jumpPage)">跳转</span>
+        <span @click="selectPage(jumpPage - 1)">跳转</span>
       </div>
     </footer>
   </div>
@@ -44,7 +46,7 @@ export default {
   data() {
     return {
       h: `${window.innerHeight}px`,
-      titles: ["事项", "解决方案", "进度", "完成时间", "操作"],
+      titles: ["事项", "解决方案", "完成时间", "操作"],
       toDoList: [],
       baseUrl: "http://47.112.112.174:7777",
       // baseUrl: "http://192.168.1.247:7777",
@@ -54,7 +56,8 @@ export default {
       next: true,
       selected: 0,
       totalPage: 0,
-      newId: 0
+      newId: 0,
+      done: false
     };
   },
   computed: {
@@ -69,9 +72,14 @@ export default {
     requestList() {
       http.get(`${this.baseUrl}/v1/work`).then(res => {
         this.toDoList = [...res.data];
+        this.toDoList.forEach(element => {
+          element.done = +element.done;
+        });
+        this.toDoList.sort((x, y) => {
+          return x.done - y.done;
+        });
         this.totalPage = Math.ceil(this.toDoList.length / 5);
       });
-      
     },
     addList(id, item, solution, done, date) {
       const temp = {
@@ -129,11 +137,16 @@ export default {
 
       this.addList(
         Math.random() * Math.floor(id),
-        list[0].innerHTML,
+        list[0].childNodes[1].innerHTML,
         list[1].innerHTML,
-        list[2].innerHTML,
-        list[3].innerHTML
+        +list[0].firstChild.checked,
+        list[2].innerHTML
       );
+      // if (+list[0].firstChild.checked) {
+      //   document.getElementById(id).style.background = "rgb(155, 155, 35)";
+      // } else {
+      //   document.getElementById(id).style.background = "transparent";
+      // }
       alert("保存成功");
     },
     deletes(id) {
@@ -149,16 +162,21 @@ export default {
 
       this.updateList(
         id,
-        list[0].innerHTML,
+        list[0].childNodes[1].innerHTML,
         list[1].innerHTML,
-        list[2].innerHTML,
-        list[3].innerHTML
+        +list[0].firstChild.checked,
+        list[2].innerHTML
       );
+      if (+list[0].firstChild.checked) {
+        document.getElementById(id).style.background = "rgb(155, 155, 35)";
+      } else {
+        document.getElementById(id).style.background = "transparent";
+      }
     },
     selectPage(index) {
       this.selected = index;
       this.page = index;
-      this.jumpPage = index + 1;
+      this.jumpPage = +index + 1;
       if (index > 0) {
         this.last = true;
       } else {
@@ -185,6 +203,7 @@ export default {
   table {
     border: none;
     width: 80%;
+    height: 70%;
     caption {
       font-size: 2rem;
       font-weight: 700;
@@ -194,6 +213,7 @@ export default {
     th {
       color: rgba(10, 9, 9, 0.815);
       font-weight: 700;
+      height: 10%;
     }
     td,
     th {
@@ -253,6 +273,37 @@ footer {
     background: rgb(84, 149, 235);
     color: #fff !important;
   }
+}
+
+.date {
+  width: 12%;
+  text-align: center;
+}
+
+.item {
+  width: 30%;
+  .item-text {
+    float: left;
+    margin-left: 10px;
+    text-align: left;
+  }
+  .item-checkbox {
+    float: left;
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    left: 0;
+    &:checked {
+      background-color: #2196f3 !important;
+    }
+    &:hover {
+      background-color: #ccc;
+    }
+  }
+}
+.checked {
+  background: rgb(155, 155, 35);
 }
 </style>
 

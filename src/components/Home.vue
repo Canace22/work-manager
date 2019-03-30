@@ -20,15 +20,18 @@
             </li>
           </ul>
         </li>
-        <li class="list-item tool" @click="selectPage(6)">
-          <img :src="`${baseUrl}img/tool.png`">
-          工具
-        </li>
       </ul>
     </aside>
     <main>
-      <to-do v-if="pageType === 0"></to-do>
-      <tool v-if="pageType === 6"></tool>
+      <iframe
+        class="to-do"
+        v-for="(item,index) in tools"
+        :key="index"
+        v-show="index===pageType"
+        :src="item"
+        :height="h"
+        :scrolling="index===2?'auto':'no'"
+      ></iframe>
     </main>
   </div>
 </template>
@@ -50,21 +53,22 @@ export default {
           icon: "./img/work.png",
           item: [
             { text: "to-do", icon: "./img/to-do.png", id: 0 },
-            { text: "简历", icon: "./img/page.png", id: 1 },
-            { text: "周报", icon: "./img/week.png", id: 2 }
+            { text: "笔记", icon: "./img/article.png", id: 1 }
           ]
         },
         {
           title: "个人",
           icon: "./img/user.png",
-          item: [
-            { text: "to-do", icon: "./img/to-do.png", id: 3 },
-            { text: "随笔", icon: "./img/article.png", id: 4 },
-            { text: "111", icon: "./img/private.png", id: 5 }
-          ]
+          item: [{ text: "博客", icon: "./img/article.png", id: 2 }]
         }
       ],
-      pageType: 0
+      pageType: 0,
+      h: `${window.innerHeight}px`,
+      tools: [
+        "https://mubu.com/edit/ajxMpEmB-V",
+        "https://dillinger.io/",
+        "https://canace.site/"
+      ]
     };
   },
   methods: {
@@ -136,5 +140,9 @@ li {
       }
     }
   }
+}
+.to-do {
+  width: 100%;
+  border: none;
 }
 </style>

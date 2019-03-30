@@ -6,14 +6,8 @@ Vue.use(Router)
 
 export default new Router({
   routes: [{
-      path: '/',
-      name: 'home',
-      component: Home
-    },
-    {
-      path: '/edit',
-      name: 'edit',
-      component: () => import( /* webpackChunkName: "edit" */ './views/Edit.vue')
-    }
-  ]
+    path: '/',
+    name: 'home',
+    component: Home
+  }, ]
 })
