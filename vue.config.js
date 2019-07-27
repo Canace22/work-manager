@@ -3,7 +3,6 @@ const path = require('path');
 const resolve = dir => path.join(__dirname, dir);
 
 module.exports = {
-  mode: "production",
   // 基本路径
   publicPath: './',
   // 生产环境是否生成 sourceMap 文件
