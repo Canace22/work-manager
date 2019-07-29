@@ -1,5 +1,5 @@
 <template>
-  <div class="wrap" :style="{height: h}">
+  <div class="wrap" :style="{height: height}">
     <h1>TOOL</h1>
     <section class="urlMap">
       <a
@@ -19,7 +19,7 @@ export default {
   name: "ToDo",
   data() {
     return {
-      h: `${window.innerHeight}px`,
+      height: `${window.innerHeight}px`,
       urlMap: [
         { name: "幕布", url: "https://mubu.com/list" },
         { name: "个人博客", url: "https://canace.site/" },

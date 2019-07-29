@@ -1,5 +1,5 @@
 <template>
-  <div class="wrap" :style="{height: h}">
+  <div class="wrap" :style="{height: height}">
     <table cellspacing="0" cellpadding="0">
       <caption>ToDo List</caption>
       <tr>
@@ -7,7 +7,7 @@
       </tr>
       <tr :class="{checked:item.done}" v-for="(item, index) in lists" :key="index" :id="item.id">
         <td contenteditable="true" class="item">
-          <input type="checkbox" class="item-checkbox" name="item" :checked="item.done">
+          <input type="checkbox" class="item-checkbox" name="item" :checked="item.done" />
           <span class="item-text">{{item.item}}</span>
         </td>
         <td contenteditable="true" style="width: 25%">{{item.solution}}</td>
@@ -32,7 +32,7 @@
           @click="selectPage(index)"
         >{{item}}</span>
         <!-- <span :class="{selected:selected===-2}" v-if="next" @click="selectNext()">下一页</span> -->
-        <input v-model="jumpPage">
+        <input v-model="jumpPage" />
         <span @click="selectPage(jumpPage - 1)">跳转</span>
       </div>
     </footer>
@@ -45,7 +45,7 @@ export default {
   name: "ToDo",
   data() {
     return {
-      h: `${window.innerHeight}px`,
+      height: `${window.innerHeight}px`,
       titles: ["事项", "解决方案", "完成时间", "操作"],
       toDoList: [],
       baseUrl: "http://47.112.112.174:7777",

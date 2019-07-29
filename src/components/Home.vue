@@ -1,5 +1,5 @@
 <template>
-  <div class="container" :style="{height: h}">
+  <div class="container" :style="{height: height}">
     <navigate :list="list" @selectPage="selectPage"></navigate>
     <main class="main">
       <iframe
@@ -8,7 +8,7 @@
         :key="index"
         v-show="index===pageType"
         :src="item"
-        :height="h"
+        :height="height"
         :scrolling="index===2?'auto':'no'"
       ></iframe>
     </main>
@@ -22,7 +22,6 @@ export default {
   components: { Navigate },
   data() {
     return {
-      h: `${window.innerHeight}px`,
       list: [
         {
           title: "工具",
@@ -54,7 +53,7 @@ export default {
         "https://canace22.github.io/calculate/"
       ],
       pageType: 0,
-      h: `${window.innerHeight}px`,
+      height: `${window.innerHeight}px`,
       day: 0,
       hour: 0,
       minute: 0,

@@ -55,7 +55,7 @@ export default {
     timer() {
       const date = new Date();
 
-      this.day = date.getDay();
+      this.day = 7 - date.getDay();
     }
   }
 };
