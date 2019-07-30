@@ -7,9 +7,6 @@ cache: npm
 script: 
   - yarn && yarn build
 
-after_script:
-  - echo "lypoa.com" > CNAME
-
 deploy:
  provider: pages
  skip_cleanup: true
