@@ -11,7 +11,7 @@ cd dist
 
 # if you are deploying to a custom domain
 touch CNAME
-echo 'lypoa.com' > CNAME
+echo "lypoa.com" > CNAME
 
 git init
 git add -A
