@@ -4,11 +4,11 @@ node_js:
 
 cache: npm
 
-before_script:
-  - echo "lypoa.com" > CNAME
-
 script: 
   - yarn && yarn build
+
+after_script:
+  - echo "lypoa.com" > CNAME
 
 deploy:
  provider: pages
