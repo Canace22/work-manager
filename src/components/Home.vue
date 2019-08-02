@@ -12,6 +12,8 @@
         :scrolling="index===2?'auto':'no'"
       ></iframe>
     </main>
+    <div class="pet"></div>
+    <!-- <img class="pet" :src="pet" draggable="false" /> -->
   </div>
 </template>
 
@@ -22,6 +24,7 @@ export default {
   components: { Navigate },
   data() {
     return {
+      pet: "./img/pet.png",
       list: [
         {
           title: "工具",
@@ -79,11 +82,46 @@ export default {
     justify-content: center;
     align-items: center;
   }
+  .pet {
+    position: fixed;
+    bottom: 10px;
+    width: 300px;
+    height: 300px;
+    background: url(../../public/img/pet.png);
+    background-size: 100% 100%;
+    animation: playX 2s steps(3) infinite;
+  }
 }
 
 .to-do {
   width: 100%;
   border: none;
+}
+
+@keyframes playX {
+  from {
+    background-position-y: 0px;
+    // background: url(../../public/img/pet.png) !important;
+  }
+  20% {
+    background-position-y: 5px;
+  }
+  30% {
+    background-position-y: 8px;
+  }
+  50% {
+    background-position-y: 10px;
+  }
+  60% {
+    background-position-y: 8px;
+  }
+  80% {
+    background-position-y: 5px;
+  }
+  to {
+    background-position-y: 0px;
+    // background: url(../../public/img/pet1.png) !important;
+  }
 }
 </style>
 

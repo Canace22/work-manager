@@ -67,7 +67,7 @@ export default {
   float: left;
   width: 20%;
   height: 100%;
-  background: rgb(79, 145, 231);
+  background: rgb(35, 37, 37);
   .header {
     color: #fff;
     font-weight: 700;
