@@ -65,7 +65,7 @@ export default {
 .aside {
   position: relative;
   float: left;
-  width: 20%;
+  width: 21.875rem;
   height: 100%;
   background: rgb(35, 37, 37);
   .header {
