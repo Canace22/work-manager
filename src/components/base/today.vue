@@ -25,8 +25,8 @@
 <style lang="scss" scoped>
 	.calendar {
 		position: absolute;
-		bottom: 40%;
-		right: 10px;
+		top: 10%;
+		right: 6%;
 		display: flex;
 		justify-content: center;
 		align-items: flex-end;
@@ -34,6 +34,7 @@
 		height: 128px;
 		background: url("../../../public/img/calendar.png") no-repeat;
 		background-size: 100% 100%;
+		transform: scale(0.5);
 		.item {
 			color: #14aef0;
 			font-weight: 700;

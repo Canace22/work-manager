@@ -12,7 +12,7 @@
 				:scrolling="index === 2 ? 'auto' : 'no'"
 			></iframe>
 		</main>
-		<today></today>
+		<today v-if="pageType === 0"></today>
 		<div class="pet"></div>
 	</div>
 </template>
