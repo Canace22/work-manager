@@ -29,7 +29,7 @@ export default {
       pet: './img/pet.png',
       list,
       tools: [
-        'https://mubu.com/edit/ajxMpEmB-V',
+        'https://mubu.com/docajxMpEmB-V',
         'https://www.json.cn/',
         'https://canace.site/',
         'https://canace22.github.io/mora/',
